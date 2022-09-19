@@ -3,3 +3,7 @@ env
 config/__pycache__/
 
 db.sqlite3
+
+news/migrations/__pycache__/
+
+news/__pycache__/
