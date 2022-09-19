@@ -7,3 +7,5 @@ db.sqlite3
 news/migrations/__pycache__/
 
 news/__pycache__/
+
+info.txt
