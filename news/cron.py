@@ -21,7 +21,8 @@ class MyCronJob(CronJobBase):
         response = requests.get(NEWS_URL, headers=headers)
 
         count = 0
-        for i in response.json():
+        last_id = 0
+        for i in response.json()[last_id:]:
             # lopping the array of article ids to get their needed details
             url = " empty"
             article_url = f"https://hacker-news.firebaseio.com/v0/item/{i}.json?print=pretty"
@@ -56,7 +57,7 @@ class MyCronJob(CronJobBase):
                         news = news_id,
                         text = response.json()["text"],
                         type = response.json()["type"],
-                        hacker_news_id = kid,
+                        hacker_comment_id = kid,
                         date_created = ts,
                     )
                     comment.save()
@@ -66,4 +67,5 @@ class MyCronJob(CronJobBase):
             if count >= 100:
                 break
 
+            last_id = i
             count += 1
