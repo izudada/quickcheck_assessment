@@ -6,3 +6,10 @@ class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
         fields = ('title', 'author', 'date_created', 'hacker_news_id')
+
+
+class ArticleSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = News
+        fields = '__all__'
