@@ -9,3 +9,6 @@ news/migrations/__pycache__/
 news/__pycache__/
 
 info.txt
+
+blog/__pycache__/
+blog/migrations/__pycache__/
