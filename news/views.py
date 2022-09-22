@@ -5,7 +5,13 @@ from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import Comment, News
-from .seralizers import ArticleSerializer, NewsSerializer
+from .seralizers import (
+                            ArticleSerializer, 
+                            CreateCommentSerializer, 
+                            CreateNewsSerializer, 
+                            NewsSerializer
+                        )
+import random
 
 
 class NewsApiListView(ListAPIView):
@@ -51,3 +57,49 @@ def article_view(request, news_id):
     data['comment'] = comment_array
 
     return Response(data)
+
+
+@api_view(['POST',])
+def news_create_view(request):
+    """
+        An endpoint to create a article
+        variables:
+    """
+    serializer = CreateNewsSerializer(data=request.data)
+    uuid = ""
+    for i in range(5):
+        n = random.randint(0,22)
+        uuid = uuid + str(n)
+
+
+    #   Check if serializer is valid
+    if serializer.is_valid():
+        serializer.save(int(uuid))
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST',])
+def comment_create_view(request, news_id):
+    """
+        An endpoint to create a comment
+        variables:
+    """
+
+    try:
+        article = News.objects.get(id=news_id)
+    except News.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = CreateCommentSerializer(data=request.data)
+    uuid = ""
+    for i in range(5):
+        n = random.randint(0,22)
+        uuid = uuid + str(n)
+
+
+    #   Check if serializer is valid
+    if serializer.is_valid():
+        serializer.save(article, int(uuid))
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
