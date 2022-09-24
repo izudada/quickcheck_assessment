@@ -2,9 +2,37 @@
 {% block title %} Home {% endblock %}
 
 {% block body %}
-
+    <h1>All Article</h1>
     <div class="container">
-        <h1>All Article</h1>
+        <table class="table  table-responsive" id="dtBasicExample">
+
+            <thead>
+                <tr>
+                    <th  class="th-sm"> </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if context %}
+                    {% for article in context %}
+                        <tr class="sub">
+                           <td> 
+                                <a href="{% url 'article_detail' article.id %}">
+                                    <div class="item">
+                                        <h3>{{ article.title }}</h3>
+                                        <p> <strong> {{ article.author}} </strong> -- {{ article.date_created}} </p>
+                                    </div>
+                                </a>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <p> No article record available </p>
+                {% endif %}
+            </tbody>
+        </table>
     </div>    
+
+
 
 {% endblock %}
