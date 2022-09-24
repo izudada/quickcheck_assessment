@@ -14,6 +14,9 @@ class News(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def get_comments(self):
+        return list(self.comment_set.all())
+
 
 class Comment(models.Model):
     author = models.CharField(max_length=200, default="mainuser")
